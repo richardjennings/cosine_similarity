@@ -1,0 +1,26 @@
+package cosine_similarity
+
+import (
+	"testing"
+)
+
+func Test_CS(t *testing.T) {
+	var tt = []struct {
+		a []float64
+		b []float64
+		e float64
+	}{
+		{[]float64{}, []float64{}, 0},
+		{[]float64{0, 1, 0, 1, 0, 1, 1, 0}, []float64{0, 0, 0, 1, 1, 1, 1, 0}, 0.75},
+		{[]float64{1, 1, 0, 0, 1}, []float64{1, 1, 0, 0, 1}, 1},
+		{[]float64{0, 1, 0, 1, 1}, []float64{1, 0, 1, 0, 0}, 0},
+		{[]float64{1, 1, 0}, []float64{1, 0, 1}, 0.5},
+		{[]float64{0, 1, 1, 1, 0}, []float64{1, 0}, 0},
+	}
+	for _, tc := range tt {
+		actual := CosineSimilarity(tc.a, tc.b)
+		if actual != tc.e {
+			t.Errorf("CS(%v, %v) = %v, want %v", tc.a, tc.b, actual, tc.e)
+		}
+	}
+}
